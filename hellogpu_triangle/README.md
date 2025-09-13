@@ -26,7 +26,7 @@ A minimal PlayStation 1 homebrew example that draws a yellow triangle using MIPS
    - Open `hellogpu.ps-exe` in a PS1 emulator (e.g., DuckStation).
    - You should see the following result:
 
-     ![Triangle Demo](images/screenshot.png)
+   ![Triangle Demo](images/Screenshot_20250913_133531.png)
 
 ---
 
