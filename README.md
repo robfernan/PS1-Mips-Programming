@@ -1,5 +1,3 @@
-This version fixes the formatting issues, restores the missing image previews for each project, and organizes the OS-specific setup into a clean, copy-pasteable format.
-
 # PS1 MIPS Assembly Programming
 
 A modern collection of PlayStation 1 (PS1) MIPS assembly examples, tools, and guides. This repository is built for **modern 64-bit operating systems** using the `armips` assembler.
