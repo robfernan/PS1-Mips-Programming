@@ -1,3 +1,5 @@
+This version fixes the formatting issues, restores the missing image previews for each project, and organizes the OS-specific setup into a clean, copy-pasteable format.
+
 # PS1 MIPS Assembly Programming
 
 A modern collection of PlayStation 1 (PS1) MIPS assembly examples, tools, and guides. This repository is built for **modern 64-bit operating systems** using the `armips` assembler.
@@ -9,13 +11,10 @@ By using this setup, you can skip the headache of setting up legacy 16-bit Virtu
 ## 📦 Project Gallery
 
 | Project | Feature | Preview |
-| --- | --- | --- |
-| **Gouraud Triangle** | Multi-color interpolation across a triangle, a magenta quad, and a flat yellow triangle. | You should see the following result:
-https://github.com/robfernan/PS1-Mips-Programming/raw/main/hellogpu_gourand_triangle/images/Screenshot_20250913_142449.png
-Files |
-| **Hello Quad** | Rendering a yellow triangle and a magenta quadrilateral using GP0 commands. | https://github.com/robfernan/PS1-Mips-Programming/raw/main/hellogpu_quad/images/Screenshot_20250913_140819.png |
-| **Hello Triangle** | Basic GPU primitive entry—the "Hello World" of PS1 graphics. | https://github.com/robfernan/PS1-Mips-Programming/blob/main/hellogpu_triangle/images/Screenshot_20250913_133531.png |
-
+| :--- | :--- | :--- |
+| **Gouraud Triangle** | Multi-color interpolation across a triangle, a magenta quad, and a flat yellow triangle. | ![Gouraud Triangle](https://github.com/robfernan/PS1-Mips-Programming/raw/main/hellogpu_gourand_triangle/images/Screenshot_20250913_142449.png) |
+| **Hello Quad** | Rendering a yellow triangle and a magenta quadrilateral using GP0 commands. | ![Hello Quad](https://github.com/robfernan/PS1-Mips-Programming/raw/main/hellogpu_quad/images/Screenshot_20250913_140819.png) |
+| **Hello Triangle** | Basic GPU primitive entry—the "Hello World" of PS1 graphics. | ![Hello Triangle](https://github.com/robfernan/PS1-Mips-Programming/raw/main/hellogpu_triangle/images/Screenshot_20250913_133531.png) |
 ---
 
 ## 🚀 OS-Specific Setup
@@ -142,4 +141,4 @@ The old **PsyQ SDK** tools are 16-bit and require a virtual machine (like Virtua
 
 ---
 
-**Happy Hacking!** *Created by [Robert Fernandez*](https://www.google.com/search?q=https://github.com/robfernan)
+**Happy Hacking!** *Created by [Robert Fernandez*](https://github.com/robfernan)
