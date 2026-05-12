@@ -133,10 +133,16 @@ make
 
 ---
 
-## ❓ Why this approach?
+## ❓ Why This Project?
 
-The old **PsyQ SDK** tools are 16-bit and require a virtual machine (like VirtualBox running Windows XP/7) to function. **armips** is a modern, cross-platform alternative that allows you to stay in your native OS, use modern editors, and utilize AI tools like GitHub Copilot to learn assembly faster.
+Setting up PS1 homebrew on modern hardware can be tricky. This repository aims to make it easy for anyone to follow along with **Pikuma's tutorials** and learn PS1 programming without the hassle of legacy 16-bit SDKs or virtual machines. 
+
+My goal is to help anyone else who might be struggling with the setup process, providing a path to learn low-level console development using the modern tools we use every day.
 
 ---
 
-**Happy Hacking!** *Created by [Robert Fernandez*](https://github.com/robfernan)
+**Happy Hacking!**
+*Created by [Robert Fernandez](https://github.com/robfernan)*
+
+---
+
