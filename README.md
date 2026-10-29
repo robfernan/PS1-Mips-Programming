@@ -1,148 +1,85 @@
 # PS1 MIPS Assembly Programming
 
-A modern collection of PlayStation 1 (PS1) MIPS assembly examples, tools, and guides. This repository is built for **modern 64-bit operating systems** using the `armips` assembler.
+MIPS assembly for PlayStation 1 — technical examples and educational resources.
 
-By using this setup, you can skip the headache of setting up legacy 16-bit VirtualBox environments or the original PsyQ SDK, while still learning the core fundamentals of the PS1 hardware. Whether you're on a modern machine or an older device, this workflow is designed to be accessible and fast.
+Three commented GPU lessons that program the PlayStation 1 graphics ports directly. Each folder has MIPS source, a prebuilt `hellogpu.ps-exe`, and a DuckStation screenshot.
 
----
+<p align="center">
+  <img src="hellogpu_triangle/images/Screenshot_20250913_133531.png" alt="DuckStation window showing a flat yellow triangle on a dark blue frame" width="31%">
+  <img src="hellogpu_quad/images/Screenshot_20250913_140819.png" alt="DuckStation window showing a yellow triangle and a magenta quad" width="31%">
+  <img src="hellogpu_gourand_triangle/images/Screenshot_20250913_142449.png" alt="DuckStation window showing a yellow triangle, a magenta quad, and a Gouraud-shaded triangle" width="31%">
+</p>
 
-## 📦 Project Gallery
+| Lesson | What it draws |
+| --- | --- |
+| [`hellogpu_triangle`](hellogpu_triangle) | Flat yellow triangle (GP0 `0x20`) |
+| [`hellogpu_quad`](hellogpu_quad) | That triangle plus a magenta quad (GP0 `0x28`) |
+| [`hellogpu_gourand_triangle`](hellogpu_gourand_triangle) | Both shapes plus a Gouraud triangle (GP0 `0x30`, magenta / teal / green vertices) |
 
-| Project | Feature | Preview |
-| :--- | :--- | :--- |
-| **Gouraud Triangle** | Multi-color interpolation across a triangle, a magenta quad, and a flat yellow triangle. | ![Gouraud Triangle](https://github.com/robfernan/PS1-Mips-Programming/raw/main/hellogpu_gourand_triangle/images/Screenshot_20250913_142449.png) |
-| **Hello Quad** | Rendering a yellow triangle and a magenta quadrilateral using GP0 commands. | ![Hello Quad](https://github.com/robfernan/PS1-Mips-Programming/raw/main/hellogpu_quad/images/Screenshot_20250913_140819.png) |
-| **Hello Triangle** | Basic GPU primitive entry—the "Hello World" of PS1 graphics. | ![Hello Triangle](https://github.com/robfernan/PS1-Mips-Programming/raw/main/hellogpu_triangle/images/Screenshot_20250913_133531.png) |
----
+The directory name `hellogpu_gourand_triangle` is spelled that way in the tree.
 
-## 🚀 OS-Specific Setup
+## What shipped
 
-Choose the method that best fits your current environment.
+These three lessons are the project. They are educational recreations of Pikuma's PS1 GPU demos (triangle, quad, and Gouraud shading): commented assembly, a small `bin2exe.py` packer, and per-lesson notes. Each program clears the frame with a GP0 rectangle fill, draws its primitives, and spins. Prebuilt `hellogpu.ps-exe` files are already in the lesson folders.
 
-### **1. Linux (Native)**
+A separate background-color sample, a game, an emulator, and an SDK are outside this repository. [armips](https://github.com/Kingcom/armips) is an external assembler. The Makefiles still default to a machine-local path, so builds need the override below.
 
-Choose the commands for your specific distribution:
+## Run
 
-#### **Debian / Ubuntu / Pop!_OS / Mint**
+Open any of these in DuckStation (or another PS1 emulator that loads PS-EXE files):
 
-```bash
-sudo apt update
-sudo apt install build-essential cmake python3 git
-# Build armips
-git clone --recursive https://github.com/Kingcom/armips.git
-mkdir armips/build && cd armips/build
-cmake .. && make
-sudo cp armips /usr/local/bin/
+- `hellogpu_triangle/hellogpu.ps-exe`
+- `hellogpu_quad/hellogpu.ps-exe`
+- `hellogpu_gourand_triangle/hellogpu.ps-exe`
 
-```
+## Build
 
-#### **Fedora / Nobara**
+You need [armips](https://github.com/Kingcom/armips) and Python 3. Every lesson Makefile sets `ARMIPS` to `/home/mungdaal321/armips/build/armips`. Pass your own binary on the command line so GNU make overrides that assignment.
 
-```bash
-sudo dnf groupinstall "Development Tools"
-sudo dnf install cmake python3
-# Build armips
-git clone --recursive https://github.com/Kingcom/armips.git
-mkdir armips/build && cd armips/build
-cmake .. && make
-sudo cp armips /usr/local/bin/
-
-```
-
-#### **Arch / Manjaro**
+### Linux and macOS
 
 ```bash
-sudo pacman -S base-devel cmake python git
-# Alternatively, install armips-git from the AUR
-yay -S armips-git 
-
+cd hellogpu_triangle
+make ARMIPS=armips
 ```
 
----
-
-### **2. Windows 10 / 11**
-
-1. **Compiler:** Download [w64devkit](https://github.com/skeeto/w64devkit/releases) (portable C/C++ development suite) and add the `bin` folder to your Path.
-2. **Assembler:** Download the `armips.exe` binary from the [Orphis Buildbot](https://www.google.com/search?q=https://buildbot.orphis.net/armips/) and place it in your project folder or Path.
-3. **Python:** Ensure Python 3 is installed via the Microsoft Store or Python.org.
-
----
-
-### **3. macOS (Apple Silicon & Intel)**
+That writes `hellogpu.bin`, then `hellogpu.ps-exe` via `python3 bin2exe.py`. The same two lines work in `hellogpu_quad` and `hellogpu_gourand_triangle`. If `armips` is not on `PATH`, pass an absolute path:
 
 ```bash
-brew install cmake make python
-git clone --recursive https://github.com/Kingcom/armips.git
-mkdir armips/build && cd armips/build
-cmake .. && make
-sudo cp armips /usr/local/bin/
-
+make ARMIPS=/usr/local/bin/armips
 ```
 
----
+`make clean` deletes `hellogpu.bin` and `hellogpu.ps-exe` in the current lesson.
 
-## 💻 Modern Developer Experience
+### Windows
 
-### **VS Code Setup**
+[`build.ps1`](build.ps1) runs `armips` and `python bin2exe.py`. It uses `$env:ARMIPS` when that variable is set. Otherwise it looks for `%USERPROFILE%\Documents\Projects\PS1Dev\armips\armips.exe`.
 
-To turn VS Code into a PS1 IDE, install:
-
-* **[MIPS Support](https://marketplace.visualstudio.com/items?itemName=kmarina.mips):** For syntax highlighting.
-* **[Hex Editor](https://marketplace.visualstudio.com/items?itemName=ms-vscode.hexeditor):** To view your `.bin` and `.ps-exe` files.
-
-### **GitHub Copilot Tips**
-
-* **Register Context:** Copilot is great at MIPS, but remind it of the PS1 register map.
-* **Example Prompt:** `// Write MIPS to load the GPU rendering register (0x1f801810) into register t0`
-* **Branch Delay Slots:** Always check Copilot's work. If it generates a branch (`beq`, `bne`, `j`), ensure there is a `nop` or a useful instruction immediately following it.
-
----
-
-## 🛠️ Build Workflow
-
-1. **Navigate** to a project folder (e.g., `cd hellogpu_triangle`).
-2. **Compile:**
-```bash
-make clean
-make
-
+```powershell
+$env:ARMIPS = "$env:USERPROFILE\path\to\armips.exe"
+.\build.ps1                      # every lesson that contains a .s file
+.\build.ps1 hellogpu_triangle    # one lesson
+.\build.ps1 hellogpu_quad -Run   # build, then launch pcsx-redux or DuckStation if one is on PATH
 ```
 
+When `armips.exe` is missing, `build.ps1` points at the [Kingcom/armips releases](https://github.com/Kingcom/armips/releases).
 
-3. **Run:** Open the resulting `hellogpu.ps-exe` in **DuckStation**.
-* *Tip: In DuckStation, go to "Tools" > "VRAM Viewer" to see exactly how your shapes are being drawn in real-time!*
+## What the programs touch
 
+All three lessons use the same header, then add primitives. Addresses and opcodes below are the ones in `hellogpu.s`.
 
+- I/O base `0x1F800000`. GP0 (render) at `0x1F801810`. GP1 (display control) at `0x1F801814`.
+- GP1: reset (`0x00`), display enable (`0x03`), display mode 320×240, 15-bit, NTSC (`0x08`), horizontal and vertical display range (`0x06`, `0x07`).
+- GP0 setup: draw mode (`0xE1`), drawing area (`0xE3`, `0xE4`), drawing offset (`0xE5`), then a VRAM fill (`0x02`, color `0x422E1B` in BBGGRR) from (0, 0) at 319×239.
+- Primitives: flat triangle `0x20` (yellow `0x00FFFF`), flat quad `0x28` (magenta `0xFF00FF`), Gouraud triangle `0x30`.
+- Load address `0x80010000`. After the draw calls, the program branches to itself.
 
----
+`bin2exe.py` wraps the raw binary in a `PS-X EXE` header (entry and destination `0x80010000`, initial stack `0x801FFF00`).
 
-## 📑 PS1 Technical Reference (Cheatsheet)
+## Star
 
-* **CPU:** R3000A 32-bit RISC (33.868 MHz).
-* **Memory Map:** * `0x00000000`: Main RAM (2MB).
-* `0x1F801810`: GP0 (Rendering / Command Port).
-* `0x1F801814`: GP1 (Display Control / Status Port).
+If these examples are useful, a star helps other people find them.
 
+## License
 
-* **GP0 Commands:**
-* `0x20`: Flat Triangle.
-* `0x28`: Flat Quad.
-* `0x30`: Gouraud Triangle.
-
-
-
----
-
-## ❓ Why This Project?
-
-Setting up PS1 homebrew on modern hardware can be tricky. This repository aims to make it easy for anyone to follow along with **Pikuma's tutorials** and learn PS1 programming without the hassle of legacy 16-bit SDKs or virtual machines. 
-
-My goal is to help anyone else who might be struggling with the setup process, providing a path to learn low-level console development using the modern tools we use every day.
-
----
-
-**Happy Hacking!**
-*Created by [Robert Fernandez](https://github.com/robfernan)*
-
----
-
+[MIT](LICENSE) © 2026 [Robert Fernandez](https://robertfernandez.dev)
