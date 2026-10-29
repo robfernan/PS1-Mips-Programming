@@ -2,7 +2,7 @@
 
 # Hello GPU Gouraud Triangle (PS1 MIPS Assembly)
 
-This project is a step-by-step recreation of Pikuma's PS1 GPU Gouraud-shaded triangle demo, tailored for Linux users. It includes all the files and instructions needed to build and run the demo on modern systems.
+This project is a step-by-step recreation of Pikuma's PS1 GPU Gouraud-shaded triangle demo. It includes the source, a prebuilt PS-EXE, and build instructions for the Makefile in this folder.
 
 ---
 
@@ -10,24 +10,23 @@ This project is a step-by-step recreation of Pikuma's PS1 GPU Gouraud-shaded tri
 A minimal PlayStation 1 homebrew example that draws:
 - A yellow flat-shaded triangle (top left)
 - A magenta (pink) flat-shaded quad (bottom right)
-- A Gouraud-shaded triangle (bottom left) with smoothly interpolated colors (red, green, blue at each vertex)
+- A Gouraud-shaded triangle (bottom left) with a different color at each vertex (magenta `0xFF31FF`, teal `0xA88332`, and green `0x00FF00` in BBGGRR)
 
 This demonstrates both flat and Gouraud shading on the PS1 GPU using MIPS assembly.
 
 ---
 
-## How to Build (Linux)
+## How to Build (Linux and macOS)
 
 1. **Install prerequisites:**
-   - Build or download `armips` and place it at `/home/mungdaal321/armips/build/armips` (or update the Makefile with your path).
-   - Ensure you have Python 3 installed.
+   - [`armips`](https://github.com/Kingcom/armips) on your `PATH`, and Python 3.
+   - The Makefile defaults `ARMIPS` to `/home/mungdaal321/armips/build/armips`. Override it on the command line.
 
 2. **Build the project:**
    ```bash
-   make clean
-   make
+   make ARMIPS=armips
    ```
-   This will generate `hellogpu.ps-exe`.
+   This writes `hellogpu.ps-exe`. A prebuilt copy is already in this folder. `make clean` removes `hellogpu.bin` and `hellogpu.ps-exe`.
 
 3. **Run in an emulator:**
    - Open `hellogpu.ps-exe` in a PS1 emulator (e.g., DuckStation).
@@ -46,7 +45,7 @@ This demonstrates both flat and Gouraud shading on the PS1 GPU using MIPS assemb
 ---
 
 ## Why?
-Setting up PS1 homebrew on Linux can be tricky. This repo aims to make it easy for anyone to follow along with Pikuma's tutorials and learn PS1 programming without the hassle.
+This folder follows Pikuma's PS1 GPU Gouraud lesson in MIPS. The build is armips plus `bin2exe.py`.
 
 ---
 
